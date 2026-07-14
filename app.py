@@ -45,6 +45,10 @@ def load_model():
     except FileNotFoundError:
         st.error("❌ Model file 'diabetes_predictor_pipeline.pkl' not found!")
         return None
+    except (AttributeError, pickle.UnpicklingError, EOFError) as e:
+        st.error(f"❌ Error loading model: {type(e).__name__}")
+        st.warning("The model file may be corrupted or incompatible with the current environment. Please regenerate it.")
+        return None
 
 pipeline = load_model()
 
